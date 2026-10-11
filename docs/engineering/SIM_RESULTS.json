@@ -1,0 +1,178 @@
+{
+  "meta": {
+    "timestamp_utc": "2026-08-12T05:36:41.787520+00:00",
+    "twin_version": "0.1.0",
+    "interfaces": {
+      "grapple": "Passive CrossLink x2",
+      "deck_install": "iSSI",
+      "optional": "FuseBlox Passive"
+    },
+    "mass_design_kg": 15.01,
+    "power_monitor_w": 28.0,
+    "power_peak_w": 65.0
+  },
+  "sims": {
+    "SIM-01": {
+      "name": "Grapple approach & capture",
+      "pass": true,
+      "path_clear": true,
+      "within_reach": true,
+      "max_range_m": 0.8491,
+      "capture_success": true,
+      "pos_error_m": 0.005,
+      "att_error_deg": 1.0,
+      "collisions": [],
+      "notes": [
+        "waypoints=5 samples=81",
+        "A-ARM-02 reach_limit=1.2 m max_range=0.849 m",
+        "capture_tol_pos=0.015 m att=5.0 deg",
+        "A-IF-01 CrossLink capture modeled as tolerance check only"
+      ],
+      "criteria": "No collision with keep-outs; capture within tolerance"
+    },
+    "SIM-02": {
+      "name": "Transfer path delivery \u2192 deck",
+      "pass": true,
+      "path_clear": true,
+      "within_reach": true,
+      "max_range_m": 0.8139,
+      "collisions": [],
+      "notes": [
+        "waypoints=4 samples=61",
+        "A-ARM-02 reach_limit=1.2 m max_range=0.814 m"
+      ],
+      "criteria": "Continuous clear path under assumptions"
+    },
+    "SIM-03": {
+      "name": "Mate to deck interface (iSSI)",
+      "pass": true,
+      "lateral_error_m": 0.004,
+      "tilt_error_deg": 2.0,
+      "notes": [
+        "A-SIM-03 envelope lateral\u22640.01 m tilt\u22645.0 deg",
+        "D-01 primary deck install = iSSI"
+      ],
+      "criteria": "Alignment within capture envelope (A-SIM-03)"
+    },
+    "SIM-04": {
+      "name": "Power-on sequence",
+      "pass": true,
+      "mode_sequence": [
+        "INIT",
+        "BASELINE",
+        "MONITOR"
+      ],
+      "notes": [
+        "Mode machine INIT\u2192BASELINE\u2192MONITOR"
+      ],
+      "criteria": "Mode INIT\u2192BASELINE (then MONITOR ready)"
+    },
+    "SIM-05": {
+      "name": "Anomaly injection (vib/thermal)",
+      "pass": true,
+      "is_anomaly": true,
+      "anomaly_score": 202.345,
+      "mode": "ANOMALY",
+      "explainability": {
+        "top_features": [
+          {
+            "name": "thermal_std",
+            "z": 202.345
+          },
+          {
+            "name": "vibration_std",
+            "z": 104.699
+          },
+          {
+            "name": "vibration_rms",
+            "z": 104.699
+          },
+          {
+            "name": "vibration_p2p",
+            "z": 92.608
+          },
+          {
+            "name": "thermal_p2p",
+            "z": 65.339
+          }
+        ],
+        "channel_ids": [
+          "visual_proxy",
+          "thermal",
+          "vibration"
+        ],
+        "confidence": 1.0,
+        "threshold": 3.0,
+        "anomaly_score": 202.345,
+        "mode": "ANOMALY"
+      },
+      "packet_bytes": 2048,
+      "injected": [
+        "thermal:4.0",
+        "vibration:0.8"
+      ],
+      "criteria": "Flag + explainability fields present"
+    },
+    "SIM-06": {
+      "name": "Channel loss (visual disabled)",
+      "pass": true,
+      "mode": "DEGRADED",
+      "channels_used": [
+        "thermal",
+        "vibration"
+      ],
+      "packet_bytes": 1024,
+      "product_continues": true,
+      "notes": [
+        "channel_loss_detected"
+      ],
+      "criteria": "DEGRADED mode; product continues"
+    },
+    "SIM-07": {
+      "name": "Remove & reinstall site B",
+      "pass": true,
+      "path_clear": true,
+      "within_reach": true,
+      "max_range_m": 0.2345,
+      "mate_site_b": true,
+      "post_install_product_bytes": 1024,
+      "collisions": [],
+      "notes": [
+        "waypoints=5 samples=81",
+        "A-ARM-02 reach_limit=1.2 m max_range=0.235 m",
+        "A-SIM-03 envelope lateral\u22640.01 m tilt\u22645.0 deg",
+        "D-01 primary deck install = iSSI",
+        "UC-03 multi-site reconfiguration"
+      ],
+      "criteria": "UC-03 complete in script (remove A \u2192 install B + sense)"
+    }
+  },
+  "summary": {
+    "total": 7,
+    "passed": 7,
+    "failed": [],
+    "all_pass": true
+  },
+  "assumptions": {
+    "A-ARM-01": "Arm handling prefers mass \u226420 kg; design ~15 kg",
+    "A-ARM-02": "Simplified arm reach treated as spherical radius 1.2 m (NOT official DH)",
+    "A-ARM-03": "Transfer path is piecewise-linear waypoints in deck frame (kinematic only)",
+    "A-ARM-04": "Grapple capture tolerance \u00b115 mm position, \u00b15 deg attitude (ASSUMPTION)",
+    "A-IF-01": "Passive CrossLink mates active CrossLink EE",
+    "A-IF-02": "Primary deck install is iSSI (D-01)",
+    "A-SIM-01": "Keep-out cylinders around solar array brackets and launch locks",
+    "A-SIM-03": "iSSI capture envelope: 10 mm lateral, 5 deg tilt",
+    "A-B-04": "MONITOR average power design point 28 W",
+    "A-B-03": "Peak power design point 65 W, NTE 80 W",
+    "A-D-03": "Anomaly event packet target 1\u20134 kB"
+  },
+  "budget_check": {
+    "mass_design_kg": 15.01,
+    "mass_team_max_kg": 25.0,
+    "mass_ok": true,
+    "monitor_w": 28.0,
+    "peak_w": 65.0,
+    "nte_w": 80.0,
+    "power_ok": true
+  }
+}

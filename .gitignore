@@ -1,0 +1,30 @@
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Python twin (future)
+__pycache__/
+.venv/
+venv/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+
+# Secrets / local
+.env
+.env.*
+*.pem
+
+# Build
+dist/
+build/
+node_modules/
+
+# Large local caches
+*.log
