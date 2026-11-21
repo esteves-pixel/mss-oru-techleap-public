@@ -1,0 +1,67 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "serialNumber": "urn:uuid:e5336607-86a6-4662-9def-f7f956765ec0",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-11-21T00:00:00Z",
+    "supplier": {
+      "name": "Descoberta Systems LLC"
+    },
+    "authors": [
+      {
+        "name": "Gonçalo Esteves"
+      }
+    ],
+    "tools": {
+      "components": [
+        {
+          "type": "application",
+          "name": "hand-built from requirements.txt"
+        }
+      ]
+    },
+    "component": {
+      "type": "application",
+      "bom-ref": "mss-oru-techleap-public",
+      "name": "mss-oru-techleap-public",
+      "supplier": {
+        "name": "Descoberta Systems LLC"
+      },
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/esteves-pixel/mss-oru-techleap-public"
+        }
+      ]
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "pkg:pypi/numpy",
+      "name": "numpy",
+      "version": ">=1.24",
+      "purl": "pkg:pypi/numpy",
+      "supplier": {
+        "name": "NumPy Developers"
+      },
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-3-Clause"
+          }
+        }
+      ],
+      "description": "declared in requirements.txt as numpy>=1.24 (range, not pinned)"
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "mss-oru-techleap-public",
+      "dependsOn": [
+        "pkg:pypi/numpy"
+      ]
+    }
+  ]
+}
